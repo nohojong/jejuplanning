@@ -73,19 +73,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-// def querydslDir = "src/main/generated"
-
-// sourceSets {
-//     main.java.srcDirs += [ querydslDir ]
-// }
-
-// tasks.withType(JavaCompile).configureEach {
-//     options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
-// }
-
-//clean {
-//    delete file(querydslDir)
-//}
+// QueryDSL 설정 - Q 클래스는 src/main/java 아래에 생성되도록 설정
+// 참고: Q 클래스들은 도메인 클래스와 같은 패키지에 있어야 합니다
 
 tasks.named('test') {
 	useJUnitPlatform()

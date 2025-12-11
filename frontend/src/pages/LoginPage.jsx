@@ -39,10 +39,10 @@ function LoginPage() {
         const checkLoginStatus = async () => {
             try {
                 // 서버에 사용자 정보를 요청하여 이미 로그인되어 있는지 확인합니다.
-                await api.get('/api/users/me');
+                const response = await api.get('/api/users/me');
                 // 로그인 되어 있다면 장소 목록 페이지로 이동합니다.
                 navigate('/places');
-                setUser(Response.data);
+                setUser(response.data);
             } catch (err) {
                 // 로그인 되어 있지 않으면 사용자 정보를 null로 설정합니다.
                 setUser(null);
