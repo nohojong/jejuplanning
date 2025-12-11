@@ -3,14 +3,12 @@ package net.codecraft.jejutrip.tour.place.service;
 import lombok.RequiredArgsConstructor;
 import net.codecraft.jejutrip.tour.place.domain.Place;
 import net.codecraft.jejutrip.tour.place.dto.PlaceResponse;
+import net.codecraft.jejutrip.tour.place.exception.PlaceNotFoundException;
 import net.codecraft.jejutrip.tour.place.repository.PlaceRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +29,7 @@ public class PlaceService {
     // ID로 특정 장소 조회
     public PlaceResponse findPlaceById(Long id) {
         Place place = placeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 장소를 찾을 수 없습니다. id=" + id));
+                .orElseThrow(() -> new PlaceNotFoundException("해당 장소를 찾을 수 없습니다. id=" + id));
         return new PlaceResponse(place);
     }
 

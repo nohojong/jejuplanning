@@ -1,7 +1,6 @@
 package net.codecraft.jejutrip.tour.review.controller;
 
 import lombok.RequiredArgsConstructor;
-import net.codecraft.jejutrip.tour.review.domain.Review;
 import net.codecraft.jejutrip.tour.review.dto.ReviewRequest;
 import net.codecraft.jejutrip.tour.review.dto.ReviewResponse;
 import net.codecraft.jejutrip.tour.review.service.ReviewService;
@@ -10,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api/places/{placeId}/reviews")

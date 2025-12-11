@@ -55,23 +55,34 @@ public class SecurityConfig {
                     .requestMatchers("/api/admin/**")
                     .hasRole(UserRole.MANAGER.name())
 
-                    // 특정 POST 엔드포인트 허용
-                    .requestMatchers(HttpMethod.POST,
+                    // 공개 엔드포인트 허용
+                    .requestMatchers(
                             "/",
                             "/error",
-                            "/login",
                             "/favicon.ico",
-                            "/api/admin/login",
                             "/api/auth/**",
                             "/oauth2/**",
                             "/login/oauth2/code/**")
                     .permitAll()
 
+                    // 장소 조회는 인증 없이 허용
                     .requestMatchers(HttpMethod.GET, "/api/places/**")
                     .permitAll()
 
-                    // 모든 GET 요청 허용
-                    .requestMatchers(HttpMethod.GET, "/**")
+                    // 게시글 목록 조회는 인증 없이 허용
+                    .requestMatchers(HttpMethod.GET, "/api/board/post")
+                    .permitAll()
+
+                    // 게시글 상세 조회는 인증 없이 허용
+                    .requestMatchers(HttpMethod.GET, "/api/board/post/**")
+                    .permitAll()
+
+                    // 댓글 조회는 인증 없이 허용
+                    .requestMatchers(HttpMethod.GET, "/api/board/comment/**")
+                    .permitAll()
+
+                    // Admin 로그인은 허용
+                    .requestMatchers(HttpMethod.POST, "/api/admin/login")
                     .permitAll()
 
                     // 나머지 모든 요청은 인증 필요

@@ -14,8 +14,6 @@ import net.codecraft.jejutrip.security.jwt.repository.RefreshTokenRepository;
 import net.codecraft.jejutrip.security.jwt.support.CookieSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.AccountException;
@@ -44,14 +42,8 @@ public class UserController {
         return ResponseEntity.ok().body(ResponseMessage.of(ResponseCode.LOGIN_SUCCESS));
     }
 
-//    @PostMapping(value = "/auth/logout")
-//    public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) {
-//        jwtService.logout(request, response);
-//        return ResponseEntity.ok().build();
-//    }
-
     @PostMapping(value = "/auth/logout")
-    public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         // 쿠키에서 직접 refresh token 확인 및 삭제
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -76,14 +68,13 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/users/me")
-    public ResponseEntity deleteUser(@CookieValue String accessToken , HttpServletResponse response) {
+    public ResponseEntity<Void> deleteUser(@CookieValue String accessToken , HttpServletResponse response) {
         userService.removeUser(accessToken , response);
         return ResponseEntity.noContent().build();
     }
 
-
     @PatchMapping("/users/me/password")
-    public ResponseEntity modifyPassword(@RequestBody PasswordRequest request) {
+    public ResponseEntity<Void> modifyPassword(@RequestBody PasswordRequest request) {
         userService.modifyPassword(request);
         return ResponseEntity.ok().build();
     }

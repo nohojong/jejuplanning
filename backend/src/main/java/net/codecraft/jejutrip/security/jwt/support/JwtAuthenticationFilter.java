@@ -18,7 +18,6 @@ import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 import static net.codecraft.jejutrip.common.exception.FilterExceptionHandler.setSuccessResponse;
 
@@ -33,9 +32,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String requestUri = httpServletRequest.getRequestURI();
 
         String token = getAccessTokenFromHeader(request);
 

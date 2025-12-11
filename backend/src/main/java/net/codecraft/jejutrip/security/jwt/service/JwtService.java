@@ -40,20 +40,8 @@ public class JwtService {
         });
 
         refreshTokenRepository.save(refreshToken);
+        log.info("JWT token saved for user: {}", loginUserEmail);
     }
-
-    @Transactional
-//    public void logout(HttpServletRequest request, HttpServletResponse response) {
-//        try {
-//            String refreshToken = getRefreshTokenFromHeader(request);
-//            refreshTokenRepository.findByToken(refreshToken).ifPresent(refreshTokenRepository::delete);
-//        } catch (SecurityException e) {
-//            log.warn("Refresh token not found during logout, but continuing logout process: {}", e.getMessage());
-//        }
-//
-//        cookieSupport.deleteJwtTokenInCookie(response);
-//    }
-
 
     public RefreshToken getRefreshToken(HttpServletRequest request) {
         String refreshToken = getRefreshTokenFromHeader(request);
@@ -68,9 +56,11 @@ public class JwtService {
             String accessToken = jwtTokenProvider.validateRefreshToken(token);
 
             response.addHeader("Set-Cookie" , cookieSupport.createAccessToken(accessToken).toString());
+            log.info("Access token refreshed successfully");
 
             return ResponseMessage.of(ResponseCode.CREATE_ACCESS_TOKEN);
         } catch (NoSuchElementException e) {
+            log.warn("Invalid refresh token: {}", e.getMessage());
             cookieSupport.deleteJwtTokenInCookie(response);
             throw new TokenForgeryException("변조된 RefreshToken 입니다.");
         }

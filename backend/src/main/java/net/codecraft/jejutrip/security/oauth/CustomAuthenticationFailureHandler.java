@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    @Value("${client.url}") // application.yml 등에 프론트엔드 주소를 설정합니다.
+    @Value("${client.url:http://localhost:5173}") // application.yml 등에 프론트엔드 주소를 설정합니다.
     private String clientUrl;
 
     @Override
