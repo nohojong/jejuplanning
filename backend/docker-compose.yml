@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack-s3
+    ports:
+      - "4566:4566"  # LocalStack의 모든 서비스가 이 포트로 노출
+    environment:
+      - SERVICES=s3  # S3 서비스만 활성화
+      - DEBUG=1      # 디버그 로그 활성화
+      - DATA_DIR=/tmp/localstack/data
+#    volumes:
+#      - "./tmp/localstack:/tmp/localstack"  # 데이터 영속성을 위한 볼륨
+#      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: unless-stopped  # 컴퓨터 재시작 시 자동 실행
